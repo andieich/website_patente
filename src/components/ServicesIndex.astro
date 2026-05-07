@@ -1,0 +1,92 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { type Lang, t, localePath } from '~/i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const tt = t(lang);
+const p = (path: string) => localePath(lang, path);
+const alternates = { en: localePath('en', 'services'), fr: localePath('fr', 'services') };
+
+const long = lang === 'fr' ? {
+  fw: "Plongée scientifique, navigation et campagnes de terrain. UVC, relevés benthiques, pêche électrique, qualité de l’eau et échantillonnage de sédiments en milieu marin et dulçaquicole.",
+  stats: "Du plan d’étude aux résultats publiables. GLM, modèles mixtes, ordination multivariée, statistiques bayésiennes — dans des workflows R reproductibles.",
+  surv: "Photogrammétrie par drone, structure-from-motion sous-marine, suivi 3D de colonies coralliennes et cartographie d’habitats benthiques.",
+  doc: "Photo et vidéo sous-marines et aériennes pour la recherche, la médiation et les médias. Repéreur et fixeur pour les productions en Polynésie française.",
+  intro: "Quatre domaines de prestation pour la recherche marine et aquatique. Disponible dans toute la Polynésie française.",
+  view: "Voir →",
+} : {
+  fw: "Scientific diving, boating, and field campaigns. UVC, benthic surveys, electrofishing, water quality and sediment sampling across marine and freshwater systems.",
+  stats: "Study design through to publication-ready results. GLMs, mixed models, multivariate ordination, Bayesian statistics — all in reproducible R workflows.",
+  surv: "Drone photogrammetry, underwater structure-from-motion, coral colony 3D monitoring, and benthic habitat mapping.",
+  doc: "Underwater and aerial photography and video for research, outreach, and media. Film scout and fixer for productions in French Polynesia.",
+  intro: "Four service areas for marine & aquatic research. Available across French Polynesia.",
+  view: "View →",
+};
+
+const items = [
+  { num: '01', title: tt('services.fw'),    href: p('services/fieldwork'),     desc: long.fw },
+  { num: '02', title: tt('services.stats'), href: p('services/statistics'),    desc: long.stats },
+  { num: '03', title: tt('services.surv'),  href: p('services/surveys'),       desc: long.surv },
+  { num: '04', title: tt('services.doc'),   href: p('services/documentation'), desc: long.doc },
+];
+---
+<Base lang={lang} title={`${tt('nav.services')} — Andreas Eich`} alternates={alternates}>
+  <PageHero
+    lang={lang}
+    title={tt('nav.services')}
+    intro={long.intro}
+    crumbs={[{ label: tt('breadcrumb.home'), href: p('') }, { label: tt('nav.services') }]}
+  />
+
+  <section class="content">
+    <div class="container-narrow">
+      <ul class="svc-nav">
+        {items.map(s => (
+          <li>
+            <a href={s.href}>
+              <span class="num">{s.num}</span>
+              <div>
+                <h2>{s.title}</h2>
+                <p>{s.desc}</p>
+              </div>
+              <span class="arr">→</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+
+      <div class="cta">
+        <p>{tt('services.cta')}</p>
+        <a href={p('contact')} class="link-coral">{tt('services.ctaLink')}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .content { padding: 5rem 0; background: var(--cream); }
+  .svc-nav { list-style: none; padding: 0; margin: 0; }
+  .svc-nav li { border-bottom: 1px solid rgba(10,35,66,0.1); }
+  .svc-nav li:last-child { border-bottom: none; }
+  .svc-nav a {
+    display: grid; grid-template-columns: 48px 1fr 32px;
+    gap: 1.5rem; align-items: start; padding: 2rem 0;
+    text-decoration: none; color: inherit; transition: opacity 0.15s;
+  }
+  .svc-nav a:hover { opacity: 0.65; }
+  .svc-nav .num {
+    font-family: var(--serif); font-weight: 700; font-size: 1.6rem;
+    color: rgba(10,35,66,0.12); line-height: 1; padding-top: 4px;
+  }
+  .svc-nav h2 { font-size: 1.25rem; margin: 0 0 0.5rem; color: var(--navy); }
+  .svc-nav p { font-size: 0.92rem; color: var(--text); line-height: 1.7; margin: 0; }
+  .svc-nav .arr { color: var(--coral); font-size: 1.1rem; padding-top: 4px; text-align: right; }
+
+  .cta {
+    margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(10,35,66,0.1);
+    text-align: center;
+  }
+  .cta p { font-size: 1rem; color: var(--text); margin-bottom: 0.75rem; }
+</style>

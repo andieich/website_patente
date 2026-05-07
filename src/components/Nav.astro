@@ -1,0 +1,124 @@
+---
+import { type Lang, t, localePath, languages } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  alternates?: Partial<Record<Lang, string>>;
+  transparent?: boolean;
+}
+const { lang, alternates, transparent = false } = Astro.props;
+const tt = t(lang);
+const path = (p: string) => localePath(lang, p);
+
+// Active-state helpers
+const here = Astro.url.pathname;
+const aboutActive = ['about','cv','publications'].some(p => here.includes(`/${p}`));
+const servActive = ['services','fieldwork','statistics','surveys','documentation'].some(p => here.includes(`/${p}`));
+const isActive = (p: string) => here === path(p);
+---
+<nav class:list={['site-nav', transparent && 'transparent']}>
+  <a class="brand" href={path('')}>
+    <svg width="32" height="32" viewBox="0 0 32 32" fill="none" aria-hidden="true">
+      <path d="M4 20 Q8 12 16 16 Q24 20 28 12" stroke="var(--coral)" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <path d="M4 24 Q8 16 16 20 Q24 24 28 16" stroke="var(--muted)" stroke-width="1.5" stroke-linecap="round" fill="none" opacity="0.6"/>
+      <circle cx="16" cy="10" r="2.5" fill="var(--coral)" opacity="0.8"/>
+    </svg>
+    <span>Andreas Eich</span>
+  </a>
+  <ul class="links">
+    <li class="has-drop">
+      <a href={path('about')} class:list={[aboutActive && 'active']}>{tt('nav.about')} ▾</a>
+      <ul class="drop">
+        <li><a href={path('about')} class:list={[isActive('about') && 'active']}>{tt('nav.aboutMe')}</a></li>
+        <li><a href={path('cv')} class:list={[isActive('cv') && 'active']}>{tt('nav.cv')}</a></li>
+        <li><a href={path('publications')} class:list={[isActive('publications') && 'active']}>{tt('nav.publications')}</a></li>
+      </ul>
+    </li>
+    <li class="has-drop">
+      <a href={path('services')} class:list={[servActive && 'active']}>{tt('nav.services')} ▾</a>
+      <ul class="drop">
+        <li><a href={path('services')} class:list={[isActive('services') && 'active']}>{tt('nav.servicesOverview')}</a></li>
+        <li><a href={path('services/fieldwork')}>{tt('nav.fw')}</a></li>
+        <li><a href={path('services/statistics')}>{tt('nav.stats')}</a></li>
+        <li><a href={path('services/surveys')}>{tt('nav.surv')}</a></li>
+        <li><a href={path('services/documentation')}>{tt('nav.doc')}</a></li>
+      </ul>
+    </li>
+    <li><a href={path('news')} class:list={[here.includes('/news') && 'active']}>{tt('nav.news')}</a></li>
+    <li><a href={path('contact')} class:list={[isActive('contact') && 'active']}>{tt('nav.contact')}</a></li>
+  </ul>
+  <div class="lang-switch">
+    {Object.keys(languages).map((l) => (
+      <a href={alternates?.[l as Lang] ?? localePath(l as Lang, '')} class:list={['lang', l === lang && 'on']}>{l.toUpperCase()}</a>
+    ))}
+  </div>
+</nav>
+
+<script>
+  // Solid background once the user scrolls past the hero on transparent-nav pages.
+  const nav = document.querySelector('.site-nav');
+  if (nav?.classList.contains('transparent')) {
+    const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 60);
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+  }
+</script>
+
+<style>
+  .site-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    background: rgba(10,35,66,0.97);
+    height: 72px; padding: 0 2.5rem;
+    display: flex; align-items: center; justify-content: space-between;
+    transition: background 0.4s ease, border-color 0.4s ease;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .site-nav.transparent { background: transparent; border-bottom-color: transparent; }
+  .site-nav.transparent.scrolled { background: rgba(10,35,66,0.97); backdrop-filter: blur(12px); border-bottom-color: rgba(255,255,255,0.08); }
+
+  .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+  .brand span { font-family: var(--serif); font-weight: 700; font-size: 1.1rem; color: var(--cream); }
+
+  ul { list-style: none; }
+  .links { display: flex; gap: 2rem; align-items: center; }
+  .links > li { position: relative; }
+  .links a {
+    font-family: var(--sans); font-weight: 500; font-size: 0.82rem;
+    letter-spacing: 0.06em; text-transform: uppercase;
+    color: rgba(250,249,247,0.85); text-decoration: none;
+    border-bottom: 1px solid transparent; padding: 4px 0;
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .links a:hover, .links a.active { color: var(--coral); border-bottom-color: var(--coral); }
+
+  .has-drop:hover .drop, .has-drop:focus-within .drop { display: block; }
+  .drop {
+    display: none; position: absolute; top: 100%; left: 50%;
+    transform: translateX(-50%); margin-top: 12px; min-width: 230px;
+    background: var(--navy); border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 6px; box-shadow: 0 16px 48px rgba(0,0,0,0.3); overflow: hidden;
+  }
+  .drop li { display: block; }
+  .drop a {
+    display: block; padding: 11px 18px; font-size: 0.83rem;
+    text-transform: none; letter-spacing: 0; border-bottom: 1px solid rgba(255,255,255,0.05);
+    color: rgba(232,220,200,0.85);
+  }
+  .drop a:hover, .drop a.active { background: rgba(224,123,84,0.1); color: var(--coral); border-bottom-color: rgba(255,255,255,0.05); }
+
+  .lang-switch { display: flex; gap: 4px; }
+  .lang {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 600;
+    letter-spacing: 0.05em; padding: 3px 9px; border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.3); color: rgba(255,255,255,0.6);
+    text-decoration: none;
+  }
+  .lang.on { background: var(--coral); color: #fff; border-color: var(--coral); }
+
+  @media (max-width: 768px) {
+    .site-nav { padding: 0 1rem; }
+    .links { gap: 1rem; }
+    .links a { font-size: 0.7rem; }
+    .brand span { display: none; }
+  }
+</style>

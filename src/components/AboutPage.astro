@@ -1,0 +1,121 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { type Lang, t, localePath } from '~/i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const tt = t(lang);
+const p = (path: string) => localePath(lang, path);
+const alternates = { en: localePath('en', 'about'), fr: localePath('fr', 'about') };
+
+const c = lang === 'fr' ? {
+  title: 'À propos',
+  paragraphs: [
+    "Je suis biologiste marin et aquatique, avec plus de dix ans d’expérience de terrain sur les récifs coralliens, les sédiments côtiers et les systèmes pélagiques, en Europe, dans l’Indo-Pacifique et en Polynésie française. Je termine actuellement un doctorat à l’École pratique des hautes études (France) et à l’Université Laval (Canada), portant sur l’adaptation des coraux aux changements environnementaux via une analyse multi-omique des interactions hôte–microbiome — avec un terrain basé en Polynésie française.",
+    "Avant la thèse, j’ai passé quatre ans comme chef de projet et chercheur chez HYDRA Marine Sciences, à coordonner des campagnes de terrain et de plongée scientifique à l’international. Mes travaux couvrent l’écologie récifale, l’évaluation de la biodiversité, la dégradation des plastiques marins et l’écologie microbienne — 13 articles à comité de lecture et 2 chapitres d’ouvrage à ce jour.",
+    "À travers ma patente — entreprise individuelle de conseil scientifique en Polynésie française — je propose des prestations indépendantes de terrain, d’analyse et de documentation pour les institutions académiques, les bureaux d’études, les ONG et les productions audiovisuelles dans le Pacifique et au-delà.",
+  ],
+  membershipsLabel: 'Affiliations',
+  membershipsText: 'British Ecological Society · International Society for Microbial Ecology · International Coral Reef Society',
+  reviewerLabel: 'Évaluateur (peer review)',
+  reviewerText: "PeerJ · Earth's Future · Marine Pollution Bulletin · Environmental Science & Technology",
+  facts: [
+    'Doctorant — EPHE & Université Laval',
+    'Advanced European Scientific Diver (AESD)',
+    '~700 plongées scientifiques · CMAS*** · NITROX',
+    'Permis bateau (moteur & voile)',
+    'Langues : DE (langue maternelle) · EN · FR',
+  ],
+  portrait: 'Votre portrait ici',
+  cv: 'Voir le CV →',
+  pubs: 'Publications & conférences →',
+  intro: 'Conseil en biologie marine et aquatique — 10+ ans de terrain, basé en Polynésie française.',
+} : {
+  title: 'About me',
+  paragraphs: [
+    "I'm a marine and aquatic biologist with over a decade of field experience across coral reefs, coastal sediments, and open water systems in Europe, the Indo-Pacific, and French Polynesia. I am currently completing my PhD at the École Pratique des Hautes Études (France) and Université Laval (Canada), investigating coral adaptation to environmental change through multi-omics analysis of host–microbiome interactions — with fieldwork based in French Polynesia.",
+    "Before my PhD, I spent four years as a project leader and researcher at HYDRA Marine Sciences, coordinating international fieldwork and scientific diving campaigns. My research spans reef ecology, biodiversity assessment, marine plastic degradation, and microbial ecology — 13 peer-reviewed papers and 2 book chapters to date.",
+    "Through my patente — a one-person scientific consulting company in French Polynesia — I offer independent field, analytical, and documentation services to academic institutions, environmental consultancies, NGOs, and media productions in the Pacific and beyond.",
+  ],
+  membershipsLabel: 'Memberships',
+  membershipsText: 'British Ecological Society · International Society for Microbial Ecology · International Coral Reef Society',
+  reviewerLabel: 'Peer reviewer',
+  reviewerText: "PeerJ · Earth's Future · Marine Pollution Bulletin · Environmental Science & Technology",
+  facts: [
+    'PhD candidate — ÉPHE & Université Laval',
+    'Advanced European Scientific Diver (AESD)',
+    '~700 scientific dives · CMAS*** · NITROX',
+    'Boat licence — motor & sail',
+    'Languages: DE (native) · EN · FR',
+  ],
+  portrait: 'Add your portrait here',
+  cv: 'View CV →',
+  pubs: 'Publications & Talks →',
+  intro: 'Marine & aquatic biology consulting — 10+ years field experience, based in French Polynesia.',
+};
+---
+<Base lang={lang} title={`${c.title} — Andreas Eich`} alternates={alternates}>
+  <PageHero
+    lang={lang}
+    title={c.title}
+    intro={c.intro}
+    crumbs={[{ label: tt('breadcrumb.home'), href: p('') }, { label: c.title }]}
+  />
+
+  <section class="content">
+    <div class="container-narrow grid">
+      <div class="prose">
+        {c.paragraphs.map(p => <p>{p}</p>)}
+        <p><strong>{c.membershipsLabel}: </strong>{c.membershipsText}</p>
+        <p><strong>{c.reviewerLabel}: </strong>{c.reviewerText}</p>
+        <p class="links">
+          <a href={p('cv')} class="link-coral">{c.cv}</a>
+          <span class="dot">·</span>
+          <a href={p('publications')} class="link-coral">{c.pubs}</a>
+        </p>
+      </div>
+
+      <aside>
+        <div class="portrait">
+          <span>{c.portrait}</span>
+        </div>
+        <ul class="facts">
+          {c.facts.map(f => <li>{f}</li>)}
+        </ul>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .content { padding: 5rem 0; background: var(--cream); }
+  .grid { display: grid; grid-template-columns: 1fr 280px; gap: 5rem; align-items: start; }
+  .prose p { font-size: 0.95rem; color: var(--text); line-height: 1.85; margin-bottom: 1.5rem; }
+  .prose strong { color: var(--navy); font-weight: 600; }
+  .links { display: flex; gap: 1rem; align-items: center; margin-top: 2rem; }
+  .links .dot { color: var(--muted-2); }
+
+  .portrait {
+    width: 100%; aspect-ratio: 1; border-radius: 50%;
+    background: linear-gradient(135deg, var(--cream-dk), var(--muted-2));
+    border: 3px solid var(--cream-dk);
+    display: flex; align-items: center; justify-content: center;
+    margin-bottom: 1.5rem;
+  }
+  .portrait span {
+    font-family: var(--sans); font-size: 0.78rem; color: var(--navy);
+    text-align: center; padding: 1rem; opacity: 0.55;
+  }
+  .facts { list-style: none; padding: 0; }
+  .facts li {
+    font-family: var(--sans); font-size: 0.82rem; color: var(--text);
+    padding: 0.5rem 0; border-bottom: 1px solid rgba(10,35,66,0.06); line-height: 1.5;
+  }
+  .facts li:last-child { border-bottom: none; }
+
+  @media (max-width: 768px) {
+    .grid { grid-template-columns: 1fr; gap: 2.5rem; }
+    aside { max-width: 280px; margin: 0 auto; }
+  }
+</style>

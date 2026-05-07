@@ -1,0 +1,19 @@
+---
+import ServiceDetail from '~/components/ServiceDetail.astro';
+
+const methods = [
+  { name: "Plan d’étude & analyse de puissance", desc: "Estimation d’effectifs, stratification, randomisation, blocs." },
+  { name: 'Modèles linéaires (mixtes) généralisés', desc: 'GLM/GLMM avec lme4 et glmmTMB. Diagnostics DHARMa.' },
+  { name: 'Analyse multivariée des communautés', desc: 'ACP, RDA, NMDS, CAP, PERMANOVA, SIMPER (vegan).' },
+  { name: 'Statistiques bayésiennes', desc: 'Modèles hiérarchiques avec brms (Stan).' },
+  { name: 'Visualisation & reporting reproductible', desc: 'ggplot2, Quarto / R Markdown.' },
+];
+---
+<ServiceDetail
+  lang="fr"
+  slug="statistics"
+  title="Conseil en statistiques"
+  intro="Du plan d’étude aux résultats publiables. D’un conseil ponctuel à l’analyse complète avec rapport reproductible."
+  methodsLabel="Méthodes & moyens"
+  methods={methods}
+/>

@@ -1,0 +1,19 @@
+---
+import ServiceDetail from '~/components/ServiceDetail.astro';
+
+const methods = [
+  { name: 'Recensement visuel sous-marin (UVC)', desc: 'Transects en bande et points fixes pour poissons récifaux et communautés benthiques. Protocoles GCRMN.' },
+  { name: 'Recouvrement benthique & photo-quadrats', desc: 'Photo-quadrats et transects à intercept linéaire. Analyse via CoralNet.' },
+  { name: 'Pêche électrique & échantillonnage en eau douce', desc: "Pêche électrique normalisée pour inventaires piscicoles. Évaluation d’habitat, identification, indices de condition." },
+  { name: 'Qualité de l’eau & échantillonnage de sédiments', desc: 'Profils CTD, turbidité, prélèvements de nutriments et chlorophylle, déploiement de pièges à sédiments.' },
+  { name: 'Soutien à la plongée scientifique', desc: 'Planification et sécurité plongée (AESD). NITROX, vêtement étanche, opérations depuis bateau.' },
+];
+---
+<ServiceDetail
+  lang="fr"
+  slug="fieldwork"
+  title="Soutien terrain"
+  intro="Plongée scientifique, navigation et campagnes de terrain en milieu marin et dulçaquicole. Du transect à la logistique d’une campagne pluri-hebdomadaire."
+  methodsLabel="Méthodes & moyens"
+  methods={methods}
+/>

@@ -1,0 +1,46 @@
+---
+import '~/styles/global.css';
+import Nav from '~/components/Nav.astro';
+import Footer from '~/components/Footer.astro';
+import { type Lang, t, localePath } from '~/i18n/ui';
+
+interface Props {
+  lang: Lang;
+  title: string;
+  description?: string;
+  /** Map { en: '/about/', fr: '/fr/about/' } so the language switcher links to the same page in the other language. */
+  alternates?: Partial<Record<Lang, string>>;
+  /** Hero photo for OpenGraph. Defaults to underwater hero. */
+  ogImage?: string;
+  transparentNav?: boolean;
+}
+
+const { lang, title, description, alternates, ogImage = '/images/hero-fish-rays.jpg', transparentNav = false } = Astro.props;
+const tt = t(lang);
+const desc = description ?? tt('home.lede');
+---
+<!DOCTYPE html>
+<html lang={lang}>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    {alternates && Object.entries(alternates).map(([l, href]) => (
+      <link rel="alternate" hreflang={l} href={new URL(href, Astro.site).toString()} />
+    ))}
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <Nav lang={lang} alternates={alternates} transparent={transparentNav} />
+    <main><slot /></main>
+    <Footer lang={lang} />
+  </body>
+</html>

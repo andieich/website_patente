@@ -1,0 +1,18 @@
+---
+import ServiceDetail from '~/components/ServiceDetail.astro';
+
+const methods = [
+  { name: 'Drone photogrammetry — aerial', desc: 'Georeferenced orthomosaic and DSM production. GCP integration for sub-decimetre accuracy.' },
+  { name: 'Underwater structure-from-motion (SfM)', desc: 'Centimetre-resolution 3D models of coral colonies and reef patches.' },
+  { name: 'Coral colony 3D monitoring', desc: 'Repeated photogrammetric surveys for growth rate and tissue change tracking.' },
+  { name: 'Benthic habitat mapping', desc: 'Georeferenced habitat maps integrating dive survey data with remote sensing.' },
+];
+---
+<ServiceDetail
+  lang="en"
+  slug="surveys"
+  title="Surveys & mapping"
+  intro="Drone photogrammetry, underwater 3D modelling, and benthic habitat mapping for monitoring, documentation and impact assessment."
+  methodsLabel="Methods & capabilities"
+  methods={methods}
+/>

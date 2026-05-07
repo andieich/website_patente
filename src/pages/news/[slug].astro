@@ -1,0 +1,69 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { type Lang, t, localePath } from '~/i18n/ui';
+
+export async function getStaticPaths() {
+  const all = await getCollection('news', ({ data }) => !data.draft && data.lang === 'en');
+  return all.map(post => ({ params: { slug: post.data.translationKey }, props: { post } }));
+}
+
+interface Props { post: CollectionEntry<'news'>; }
+const { post } = Astro.props;
+const { Content } = await post.render();
+const lang: Lang = 'en';
+const tt = t(lang);
+const p = (path: string) => localePath(lang, path);
+
+// Find translation, if any, for the language switcher
+const allFr = await getCollection('news', ({ data }) => data.lang === 'fr' && data.translationKey === post.data.translationKey);
+const alternates = {
+  en: p(`news/${post.data.translationKey}`),
+  fr: allFr.length ? localePath('fr', `news/${post.data.translationKey}`) : localePath('fr', 'news'),
+};
+
+const fmtDate = (d: Date) => d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+<Base lang={lang} title={`${post.data.title} — Andreas Eich`} description={post.data.summary} alternates={alternates}>
+  <PageHero
+    lang={lang}
+    title={post.data.title}
+    crumbs={[
+      { label: tt('breadcrumb.home'), href: p('') },
+      { label: tt('nav.news'), href: p('news') },
+      { label: post.data.title },
+    ]}
+  />
+
+  <article class="post">
+    <div class="container-narrow">
+      <p class="date">{fmtDate(post.data.date)}</p>
+      {post.data.image && (
+        <div class="hero-img">
+          <img src={typeof post.data.image === 'string' ? post.data.image : post.data.image.src} alt={post.data.imageAlt ?? ''} />
+        </div>
+      )}
+      <div class="prose">
+        <Content />
+      </div>
+      <p class="back"><a href={p('news')} class="link-coral">{tt('news.back')}</a></p>
+    </div>
+  </article>
+</Base>
+
+<style>
+  .post { padding: 4rem 0 6rem; background: var(--cream); }
+  .date { font-family: var(--sans); font-size: 0.82rem; color: var(--muted-2); margin-bottom: 1.5rem; }
+  .hero-img { margin-bottom: 2.5rem; border-radius: 6px; overflow: hidden; }
+  .hero-img img { width: 100%; height: auto; aspect-ratio: 16/9; object-fit: cover; }
+  .prose :global(p) { font-family: var(--sans); font-weight: 300; font-size: 0.97rem; color: var(--text); line-height: 1.85; margin-bottom: 1.5rem; }
+  .prose :global(h2) { font-family: var(--serif); font-weight: 600; font-size: 1.4rem; color: var(--navy); margin: 2.5rem 0 1rem; }
+  .prose :global(h3) { font-family: var(--serif); font-weight: 600; font-size: 1.15rem; color: var(--navy); margin: 2rem 0 0.75rem; }
+  .prose :global(a) { color: var(--coral); text-decoration: none; border-bottom: 1px solid rgba(224,123,84,0.4); }
+  .prose :global(ul), .prose :global(ol) { margin: 0 0 1.5rem 1.5rem; }
+  .prose :global(li) { font-size: 0.97rem; color: var(--text); line-height: 1.85; margin-bottom: 0.4rem; }
+  .prose :global(blockquote) { border-left: 3px solid var(--coral); padding-left: 1.25rem; margin: 1.5rem 0; color: var(--muted); font-style: italic; }
+  .prose :global(img) { width: 100%; border-radius: 4px; margin: 2rem 0; }
+  .back { margin-top: 4rem; padding-top: 2rem; border-top: 1px solid rgba(10,35,66,0.1); }
+</style>

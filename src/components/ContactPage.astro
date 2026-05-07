@@ -1,0 +1,79 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { type Lang, t, localePath } from '~/i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const tt = t(lang);
+const p = (path: string) => localePath(lang, path);
+const alternates = { en: localePath('en', 'contact'), fr: localePath('fr', 'contact') };
+
+const cBlurb = lang === 'fr'
+  ? "Pour discuter d’un projet, demander un devis ou explorer une collaboration, le plus simple est de m’écrire directement par email. Je réponds en général sous quelques jours."
+  : "To discuss a project, request a quote, or explore a collaboration, the simplest way is to email me directly. I usually reply within a few days.";
+
+const responseTime = lang === 'fr' ? 'Délai de réponse habituel : 2–4 jours ouvrés.' : 'Typical response time: 2–4 business days.';
+const based = lang === 'fr' ? 'Basé à Papeete, Tahiti — disponible dans toute la Polynésie française.' : 'Based in Papeete, Tahiti — available across French Polynesia.';
+---
+<Base lang={lang} title={`${tt('nav.contact')} — Andreas Eich`} alternates={alternates}>
+  <PageHero
+    lang={lang}
+    title={tt('nav.contact')}
+    intro={tt('contact.intro')}
+    crumbs={[{ label: tt('breadcrumb.home'), href: p('') }, { label: tt('nav.contact') }]}
+  />
+
+  <section class="content">
+    <div class="container-narrow">
+      <p class="lede">{cBlurb}</p>
+
+      <div class="email-card">
+        <p class="label">{tt('contact.emailMe')}</p>
+        <a href="mailto:eich.andreas@gmail.com" class="email">eich.andreas@gmail.com</a>
+        <p class="note">{tt('contact.emailNote')}</p>
+      </div>
+
+      <div class="meta">
+        <p>{based}</p>
+        <p>{responseTime}</p>
+      </div>
+
+      <h2>{tt('contact.elsewhere')}</h2>
+      <ul class="links">
+        <li><a href="https://orcid.org/0000-0002-9547-6487" target="_blank" rel="noopener">ORCID ↗</a></li>
+        <li><a href="https://github.com/andieich" target="_blank" rel="noopener">GitHub ↗</a></li>
+        <li><a href="https://scholar.google.com/" target="_blank" rel="noopener">Google Scholar ↗</a></li>
+      </ul>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .content { padding: 4rem 0 6rem; background: var(--cream); }
+  .lede { font-size: 0.97rem; color: var(--text); line-height: 1.85; margin-bottom: 2.5rem; }
+  .email-card {
+    background: #fff; border: 1px solid rgba(10,35,66,0.08); border-radius: 6px;
+    padding: 2rem 2.25rem; margin-bottom: 2rem;
+  }
+  .label {
+    font-family: var(--sans); font-size: 0.72rem; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase; color: var(--coral);
+    margin-bottom: 0.75rem;
+  }
+  .email {
+    display: inline-block; font-family: var(--serif); font-weight: 600;
+    font-size: 1.5rem; color: var(--navy); text-decoration: none;
+    border-bottom: 2px solid var(--coral); padding-bottom: 4px; margin-bottom: 1rem;
+  }
+  .email:hover { color: var(--coral); }
+  .note { font-size: 0.875rem; color: var(--muted); line-height: 1.7; margin: 0; }
+  .meta { padding: 1.5rem 0; border-top: 1px solid rgba(10,35,66,0.08); border-bottom: 1px solid rgba(10,35,66,0.08); margin-bottom: 2.5rem; }
+  .meta p { font-size: 0.875rem; color: var(--text); margin: 0.3rem 0; }
+  h2 {
+    font-family: var(--serif); font-weight: 600; font-size: 1.1rem;
+    color: var(--navy); margin: 0 0 1rem;
+  }
+  .links { list-style: none; padding: 0; display: flex; gap: 1.5rem; flex-wrap: wrap; }
+  .links a { font-size: 0.9rem; color: var(--coral); text-decoration: none; border-bottom: 1px solid rgba(224,123,84,0.4); padding-bottom: 2px; }
+</style>

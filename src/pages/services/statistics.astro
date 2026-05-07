@@ -1,0 +1,19 @@
+---
+import ServiceDetail from '~/components/ServiceDetail.astro';
+
+const methods = [
+  { name: 'Study design & power analysis', desc: 'Sample size estimation, stratification, randomisation, and blocking.' },
+  { name: 'Generalised Linear (Mixed) Models', desc: 'GLM/GLMM with lme4 and glmmTMB. DHARMa diagnostics.' },
+  { name: 'Multivariate community analysis', desc: 'PCA, RDA, NMDS, CAP, PERMANOVA, SIMPER (vegan).' },
+  { name: 'Bayesian statistics', desc: 'Hierarchical models with brms (Stan).' },
+  { name: 'Data visualisation & reproducible reporting', desc: 'ggplot2, Quarto / R Markdown.' },
+];
+---
+<ServiceDetail
+  lang="en"
+  slug="statistics"
+  title="Statistical consulting"
+  intro="Study design through to publication-ready results. From a brief consult to full analysis and reproducible reporting."
+  methodsLabel="Methods & capabilities"
+  methods={methods}
+/>

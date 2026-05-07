@@ -1,0 +1,19 @@
+---
+import ServiceDetail from '~/components/ServiceDetail.astro';
+
+const methods = [
+  { name: 'Underwater Visual Census (UVC)', desc: 'Belt transect and point-count surveys for reef fish and benthic communities. GCRMN-compliant protocols.' },
+  { name: 'Benthic cover surveys & photo-quadrats', desc: 'Photo-quadrat and line-intercept transects. Analysis with CoralNet.' },
+  { name: 'Electrofishing & freshwater sampling', desc: 'Standardised electrofishing for freshwater fish inventories. Habitat assessment, species ID, condition indices.' },
+  { name: 'Water quality & sediment sampling', desc: 'CTD profiles, turbidity, nutrient and chlorophyll sampling, sediment trap deployment.' },
+  { name: 'Scientific diving support', desc: 'Dive planning and safety as AESD. NITROX, dry suit, boat-based operations.' },
+];
+---
+<ServiceDetail
+  lang="en"
+  slug="fieldwork"
+  title="Fieldwork support"
+  intro="Scientific diving, boating, and field campaigns across marine and freshwater systems. From transect surveys to multi-week sampling logistics."
+  methodsLabel="Methods & capabilities"
+  methods={methods}
+/>

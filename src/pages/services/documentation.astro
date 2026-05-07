@@ -1,0 +1,18 @@
+---
+import ServiceDetail from '~/components/ServiceDetail.astro';
+
+const methods = [
+  { name: 'Underwater photography', desc: 'Scientific-grade stills for species ID, benthic documentation, and editorial use.' },
+  { name: 'Underwater videography', desc: 'HD and 4K video for research documentation, science communication, and media.' },
+  { name: 'Aerial drone footage', desc: 'Above-water stills and video for habitat, coastline, and vessel work.' },
+  { name: 'Film scout & fixer — French Polynesia', desc: 'Local knowledge, permit support, logistics. AESD available as safety diver.' },
+];
+---
+<ServiceDetail
+  lang="en"
+  slug="documentation"
+  title="Documentation"
+  intro="Underwater and aerial photography and video for research, outreach, and media. Film scout and fixer for productions in French Polynesia."
+  methodsLabel="Methods & capabilities"
+  methods={methods}
+/>

@@ -1,0 +1,75 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { type Lang, t, localePath } from '~/i18n/ui';
+
+interface Method { name: string; desc: string; }
+interface Props {
+  lang: Lang;
+  slug: 'fieldwork' | 'statistics' | 'surveys' | 'documentation';
+  title: string;
+  intro: string;
+  methodsLabel: string;
+  methods: Method[];
+}
+const { lang, slug, title, intro, methodsLabel, methods } = Astro.props;
+const tt = t(lang);
+const p = (path: string) => localePath(lang, path);
+const alternates = { en: localePath('en', `services/${slug}`), fr: localePath('fr', `services/${slug}`) };
+---
+<Base lang={lang} title={`${title} — Andreas Eich`} alternates={alternates}>
+  <PageHero
+    lang={lang}
+    title={title}
+    intro={intro}
+    crumbs={[
+      { label: tt('breadcrumb.home'), href: p('') },
+      { label: tt('nav.services'), href: p('services') },
+      { label: title },
+    ]}
+  />
+
+  <section class="content">
+    <div class="container-narrow">
+      <h2 class="section-title">{methodsLabel}</h2>
+      <ul class="methods">
+        {methods.map(m => (
+          <li>
+            <span class="name">{m.name}</span>
+            <p class="desc">{m.desc}</p>
+          </li>
+        ))}
+      </ul>
+
+      <div class="cta">
+        <p>{tt('services.cta')}</p>
+        <a href={p('contact')} class="link-coral">{tt('services.ctaLink')}</a>
+      </div>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .content { padding: 5rem 0; background: var(--cream); }
+  .section-title {
+    font-family: var(--serif); font-weight: 600; font-size: 1.3rem;
+    color: var(--navy); margin: 0 0 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(10,35,66,0.12);
+  }
+  .methods { list-style: none; padding: 0; margin: 0 0 3rem; }
+  .methods li { padding: 1rem 0; border-bottom: 1px solid rgba(10,35,66,0.07); }
+  .methods li:last-child { border-bottom: none; }
+  .methods .name {
+    font-family: var(--serif); font-weight: 600; font-size: 0.97rem;
+    color: var(--navy); display: block; margin-bottom: 4px; line-height: 1.4;
+  }
+  .methods .desc {
+    font-family: var(--sans); font-weight: 300; font-size: 0.875rem;
+    color: var(--muted); line-height: 1.7; margin: 0;
+  }
+  .cta {
+    margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(10,35,66,0.1);
+    text-align: center;
+  }
+  .cta p { font-size: 1rem; color: var(--text); margin-bottom: 0.75rem; }
+</style>

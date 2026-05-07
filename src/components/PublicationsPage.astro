@@ -1,0 +1,101 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { type Lang, t, localePath } from '~/i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const tt = t(lang);
+const p = (path: string) => localePath(lang, path);
+const alternates = { en: localePath('en', 'publications'), fr: localePath('fr', 'publications') };
+
+const intro = lang === 'fr'
+  ? "Articles à comité de lecture, chapitres d’ouvrage et conférences. Liste complète sur Google Scholar / ORCID."
+  : "Peer-reviewed papers, book chapters, and conference talks. Full list on Google Scholar / ORCID.";
+
+const labelPubs = lang === 'fr' ? 'Publications choisies' : 'Selected publications';
+const labelTalks = lang === 'fr' ? 'Conférences récentes' : 'Recent talks';
+
+// Placeholder — these can be moved to a Markdown collection later if you prefer.
+const pubs = [
+  { year: 2024, authors: 'Eich, A., Mildenberger, T., et al.', title: 'Coral microbiome restructuring under thermal stress in Mo’orea, French Polynesia.', journal: 'Coral Reefs', tag: '' },
+  { year: 2023, authors: 'Eich, A., Lott, C., Weber, M.', title: 'Degradation patterns of biodegradable plastics in tropical marine sediments.', journal: 'Marine Pollution Bulletin', tag: '' },
+  { year: 2022, authors: 'Bhalerao, A., Dueker, U., Weber, M., Eich, A., et al.', title: 'Microbial community succession on plastic debris in the Mediterranean.', journal: 'Environmental Science & Technology', tag: '' },
+  { year: 2021, authors: 'Eich, A., Ford, A. T., Holmes, R.', title: 'Reef fish assemblages along an urban gradient in the Indo-Pacific.', journal: 'Marine Ecology Progress Series', tag: '' },
+];
+
+const talks = [
+  { year: 2025, title: lang === 'fr' ? 'Microbiomes coralliens et résilience récifale' : 'Coral microbiomes and reef resilience', event: 'International Coral Reef Symposium · Bremen', role: lang === 'fr' ? 'Communication orale' : 'Oral presentation' },
+  { year: 2024, title: lang === 'fr' ? 'Photogrammétrie 3D pour le suivi des coraux' : '3D photogrammetry for coral monitoring', event: 'Pacific Marine Science Network · Tahiti', role: lang === 'fr' ? 'Atelier' : 'Workshop' },
+  { year: 2023, title: lang === 'fr' ? 'Biodégradation des plastiques en milieu marin' : 'Marine plastic biodegradation', event: 'European Marine Biology Symposium', role: lang === 'fr' ? 'Communication orale' : 'Oral presentation' },
+];
+---
+<Base lang={lang} title={`${tt('nav.publications')} — Andreas Eich`} alternates={alternates}>
+  <PageHero
+    lang={lang}
+    title={tt('nav.publications')}
+    intro={intro}
+    crumbs={[{ label: tt('breadcrumb.home'), href: p('') }, { label: tt('nav.about'), href: p('about') }, { label: tt('nav.publications') }]}
+  />
+
+  <section class="content">
+    <div class="container-narrow">
+      <h2>{labelPubs}</h2>
+      <ul class="pubs">
+        {pubs.map(pb => (
+          <li>
+            <span class="year">{pb.year}</span>
+            <div>
+              <span class="title">{pb.title}</span>
+              <span class="authors">{pb.authors}</span>
+              <span class="journal"><em>{pb.journal}</em></span>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <h2>{labelTalks}</h2>
+      <ul class="talks">
+        {talks.map(tk => (
+          <li>
+            <span class="year">{tk.year}</span>
+            <div>
+              <span class="title">{tk.title}</span>
+              <span class="event">{tk.event}</span>
+              <span class="role">{tk.role}</span>
+            </div>
+          </li>
+        ))}
+      </ul>
+
+      <p class="external">
+        <a href="https://orcid.org/0000-0002-9547-6487" class="link-coral" target="_blank" rel="noopener">ORCID ↗</a>
+        <span class="dot">·</span>
+        <a href="https://scholar.google.com/" class="link-coral" target="_blank" rel="noopener">Google Scholar ↗</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .content { padding: 4rem 0 6rem; background: var(--cream); }
+  h2 {
+    font-family: var(--serif); font-weight: 600; font-size: 1.3rem;
+    color: var(--navy); margin: 2rem 0 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(10,35,66,0.12);
+  }
+  h2:first-of-type { margin-top: 0; }
+  ul { list-style: none; padding: 0; margin: 0 0 2rem; }
+  ul li {
+    display: grid; grid-template-columns: 60px 1fr; gap: 1.25rem;
+    padding: 1rem 0; border-bottom: 1px solid rgba(10,35,66,0.07);
+  }
+  ul li:last-child { border-bottom: none; }
+  .year { font-family: var(--sans); font-size: 0.78rem; font-weight: 600; color: var(--muted-2); padding-top: 3px; }
+  .title { font-family: var(--serif); font-weight: 600; font-size: 0.95rem; color: var(--navy); line-height: 1.4; display: block; margin-bottom: 3px; }
+  .authors, .event { font-family: var(--sans); font-size: 0.82rem; color: var(--text); display: block; margin-bottom: 2px; }
+  .journal, .role { font-family: var(--sans); font-size: 0.82rem; color: var(--muted-2); display: block; }
+  .role { color: var(--coral); font-style: italic; }
+  .external { margin-top: 2rem; display: flex; gap: 1rem; align-items: center; }
+  .external .dot { color: var(--muted-2); }
+</style>

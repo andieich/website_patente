@@ -1,0 +1,34 @@
+---
+import { type Lang, localePath, t } from '~/i18n/ui';
+
+interface Crumb { label: string; href?: string; }
+interface Props { lang: Lang; title: string; intro?: string; crumbs?: Crumb[]; }
+const { title, intro, crumbs } = Astro.props;
+---
+<div class="page-hero">
+  <div class="container-narrow">
+    {crumbs && (
+      <nav class="crumbs" aria-label="Breadcrumbs">
+        {crumbs.map((c, i) => (
+          <span>
+            {c.href ? <a href={c.href}>{c.label}</a> : <span class="cur">{c.label}</span>}
+            {i < crumbs.length - 1 && <span class="sep">›</span>}
+          </span>
+        ))}
+      </nav>
+    )}
+    <h1>{title}</h1>
+    {intro && <p>{intro}</p>}
+  </div>
+</div>
+
+<style>
+  .page-hero { background: var(--navy); padding: 6rem 2.5rem 3rem; }
+  .crumbs { margin-bottom: 1.25rem; display: flex; gap: 6px; flex-wrap: wrap; }
+  .crumbs a { font-size: 0.78rem; color: rgba(232,220,200,0.45); text-decoration: none; }
+  .crumbs a:hover { color: var(--coral); }
+  .crumbs .cur { font-size: 0.78rem; color: rgba(232,220,200,0.85); }
+  .crumbs .sep { color: rgba(232,220,200,0.25); font-size: 0.7rem; margin: 0 4px; }
+  h1 { font-family: var(--serif); font-weight: 700; font-size: clamp(1.8rem, 3.5vw, 2.6rem); color: var(--cream); margin: 0 0 0.9rem; line-height: 1.2; }
+  p { font-family: var(--sans); font-weight: 300; font-size: 1rem; color: rgba(232,220,200,0.7); line-height: 1.75; max-width: 620px; margin: 0; }
+</style>

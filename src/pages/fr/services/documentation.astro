@@ -1,0 +1,18 @@
+---
+import ServiceDetail from '~/components/ServiceDetail.astro';
+
+const methods = [
+  { name: 'Photographie sous-marine', desc: "Photos scientifiques pour identification d’espèces, documentation benthique et usages éditoriaux." },
+  { name: 'Vidéo sous-marine', desc: 'Vidéo HD et 4K pour documentation scientifique, médiation et médias.' },
+  { name: 'Prises de vues aériennes par drone', desc: 'Photo et vidéo pour habitats, littoraux et travaux embarqués.' },
+  { name: 'Repérage & fixage — Polynésie française', desc: 'Connaissance locale, soutien aux autorisations, logistique. AESD disponible comme plongeur de sécurité.' },
+];
+---
+<ServiceDetail
+  lang="fr"
+  slug="documentation"
+  title="Documentation"
+  intro="Photo et vidéo sous-marines et aériennes pour la recherche, la médiation et les médias. Repéreur et fixeur pour les productions en Polynésie française."
+  methodsLabel="Méthodes & moyens"
+  methods={methods}
+/>

@@ -1,0 +1,125 @@
+---
+import Base from '~/layouts/Base.astro';
+import PageHero from '~/components/PageHero.astro';
+import { type Lang, t, localePath } from '~/i18n/ui';
+
+interface Props { lang: Lang; }
+const { lang } = Astro.props;
+const tt = t(lang);
+const p = (path: string) => localePath(lang, path);
+const alternates = { en: localePath('en', 'cv'), fr: localePath('fr', 'cv') };
+
+const c = lang === 'fr' ? {
+  intro: 'Parcours académique et professionnel — formation, postes, expérience de plongée.',
+  sections: [
+    {
+      title: 'Formation',
+      items: [
+        { year: '2022 – présent', title: 'Doctorat en Biologie', place: 'EPHE (France) & Université Laval (Canada)', detail: 'Adaptation des coraux aux changements environnementaux : interactions hôte–microbiome (multi-omique).' },
+        { year: '2014 – 2017', title: 'Master en Sciences marines tropicales', place: "Université de Brême (Allemagne)", detail: 'Mention bien.' },
+        { year: '2009 – 2014', title: 'Licence en Biologie marine', place: 'Université de Brême (Allemagne)', detail: '' },
+      ],
+    },
+    {
+      title: 'Expérience professionnelle',
+      items: [
+        { year: '2025 – présent', title: 'Consultant indépendant — patente n° G82689', place: 'Polynésie française', detail: 'Conseil scientifique : terrain, statistiques, relevés et documentation.' },
+        { year: '2018 – 2022', title: 'Chef de projet & chercheur', place: 'HYDRA Marine Sciences (Allemagne / Italie)', detail: 'Coordination de campagnes de plongée scientifique internationales.' },
+        { year: '2016 – 2018', title: 'Chercheur', place: 'Institut Leibniz pour la recherche tropicale marine (ZMT)', detail: 'Écologie microbienne, dégradation des plastiques marins.' },
+      ],
+    },
+    {
+      title: 'Plongée & terrain',
+      items: [
+        { year: '~700 plongées', title: 'Advanced European Scientific Diver (AESD)', place: 'CMAS*** · NITROX · vêtement étanche', detail: '' },
+        { year: 'Permis bateau', title: 'Permis côtier moteur & voile (Allemagne / France)', place: '', detail: '' },
+      ],
+    },
+  ],
+  download: 'Télécharger le CV (PDF) →',
+} : {
+  intro: 'Academic and professional history — education, positions, diving experience.',
+  sections: [
+    {
+      title: 'Education',
+      items: [
+        { year: '2022 – present', title: 'PhD in Biology', place: 'ÉPHE (France) & Université Laval (Canada)', detail: 'Coral adaptation to environmental change: host–microbiome interactions (multi-omics).' },
+        { year: '2014 – 2017', title: 'MSc in Tropical Marine Sciences', place: 'University of Bremen (Germany)', detail: 'Distinction.' },
+        { year: '2009 – 2014', title: 'BSc in Marine Biology', place: 'University of Bremen (Germany)', detail: '' },
+      ],
+    },
+    {
+      title: 'Professional experience',
+      items: [
+        { year: '2025 – present', title: 'Independent consultant — patente n° G82689', place: 'French Polynesia', detail: 'Scientific consulting: fieldwork, statistics, surveys, and documentation.' },
+        { year: '2018 – 2022', title: 'Project leader & researcher', place: 'HYDRA Marine Sciences (Germany / Italy)', detail: 'Coordination of international scientific diving campaigns.' },
+        { year: '2016 – 2018', title: 'Researcher', place: 'Leibniz Centre for Tropical Marine Research (ZMT)', detail: 'Microbial ecology, marine plastic degradation.' },
+      ],
+    },
+    {
+      title: 'Diving & fieldwork',
+      items: [
+        { year: '~700 dives', title: 'Advanced European Scientific Diver (AESD)', place: 'CMAS*** · NITROX · dry suit', detail: '' },
+        { year: 'Boat licence', title: 'Coastal motor & sail licence (Germany / France)', place: '', detail: '' },
+      ],
+    },
+  ],
+  download: 'Download CV (PDF) →',
+};
+---
+<Base lang={lang} title={`CV — Andreas Eich`} alternates={alternates}>
+  <PageHero
+    lang={lang}
+    title="CV"
+    intro={c.intro}
+    crumbs={[{ label: tt('breadcrumb.home'), href: p('') }, { label: tt('nav.about'), href: p('about') }, { label: 'CV' }]}
+  />
+
+  <section class="content">
+    <div class="container-narrow">
+      {c.sections.map(s => (
+        <div class="block">
+          <h2>{s.title}</h2>
+          <ul>
+            {s.items.map(it => (
+              <li>
+                <span class="year">{it.year}</span>
+                <div>
+                  <span class="title">{it.title}</span>
+                  {it.place && <span class="place">{it.place}</span>}
+                  {it.detail && <span class="detail">{it.detail}</span>}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))}
+
+      <p class="download">
+        <a href="/2026_CV_AEich.pdf" class="link-coral" target="_blank" rel="noopener">{c.download}</a>
+      </p>
+    </div>
+  </section>
+</Base>
+
+<style>
+  .content { padding: 4rem 0 6rem; background: var(--cream); }
+  .block { margin-bottom: 3rem; }
+  h2 {
+    font-family: var(--serif); font-weight: 600; font-size: 1.3rem;
+    color: var(--navy); margin: 0 0 1.5rem; padding-bottom: 0.75rem;
+    border-bottom: 1px solid rgba(10,35,66,0.12);
+  }
+  ul { list-style: none; padding: 0; margin: 0; }
+  ul li {
+    display: grid; grid-template-columns: 140px 1fr; gap: 1.5rem;
+    padding: 1rem 0; border-bottom: 1px solid rgba(10,35,66,0.07);
+  }
+  ul li:last-child { border-bottom: none; }
+  .year { font-family: var(--sans); font-size: 0.78rem; font-weight: 600; color: var(--muted-2); padding-top: 3px; }
+  .title { font-family: var(--serif); font-weight: 600; font-size: 0.97rem; color: var(--navy); display: block; margin-bottom: 2px; }
+  .place { font-family: var(--sans); font-size: 0.82rem; color: var(--muted); display: block; margin-bottom: 3px; }
+  .detail { font-family: var(--sans); font-size: 0.82rem; color: var(--text); font-style: italic; line-height: 1.6; display: block; }
+  .download { margin-top: 3rem; }
+  @media (max-width: 600px) { ul li { grid-template-columns: 1fr; gap: 0.25rem; } }
+</style>
