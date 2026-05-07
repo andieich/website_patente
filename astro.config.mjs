@@ -17,7 +17,5 @@ export default defineConfig({
       prefixDefaultLocale: false, // English at /, French at /fr/
     },
   },
-  // Temporarily disable sitemap integration to avoid build error in Netlify
-  // integrations: [sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', fr: 'fr' } } })],
-  integrations: [],
+  integrations: [sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', fr: 'fr' } } })],
 });
