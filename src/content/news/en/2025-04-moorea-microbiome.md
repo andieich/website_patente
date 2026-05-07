@@ -2,7 +2,7 @@
 title: "Coral microbiome restructuring on Mo'orea reefs"
 date: 2025-04-10
 summary: "Field campaign results from three reef sites on Mo'orea — preliminary findings on microbial community shifts following the 2024 thermal anomaly."
-image: "/images/coral-rays.jpg"
+image: "images/coral-rays.jpg"
 imageAlt: "Coral colony with light rays from above"
 lang: "en"
 translationKey: "moorea-microbiome-2025"

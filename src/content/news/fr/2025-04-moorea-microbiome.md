@@ -2,7 +2,7 @@
 title: "Restructuration des microbiomes coralliens sur les récifs de Mo'orea"
 date: 2025-04-10
 summary: "Résultats d'une campagne sur trois sites récifaux de Mo'orea — premiers éléments sur les changements de communautés microbiennes après l'anomalie thermique de 2024."
-image: "/images/coral-rays.jpg"
+image: "images/coral-rays.jpg"
 imageAlt: "Colonie corallienne avec rais de lumière en surface"
 lang: "fr"
 translationKey: "moorea-microbiome-2025"
