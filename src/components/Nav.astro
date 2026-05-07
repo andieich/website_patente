@@ -60,17 +60,20 @@ const isActive = (p: string) => here === path(p);
       <ul class="drop">
         <li>
           <a href={path("about")} class:list={[isActive("about") && "active"]}
-            >{tt("nav.aboutMe")}</a>
+            >{tt("nav.aboutMe")}</a
+          >
         </li>
         <li>
           <a href={path("cv")} class:list={[isActive("cv") && "active"]}
-            >{tt("nav.cv")}</a>
+            >{tt("nav.cv")}</a
+          >
         </li>
         <li>
           <a
             href={path("publications")}
             class:list={[isActive("publications") && "active"]}
-            >{tt("nav.publications")}</a>
+            >{tt("nav.publications")}</a
+          >
         </li>
       </ul>
     </li>
@@ -83,7 +86,8 @@ const isActive = (p: string) => here === path(p);
           <a
             href={path("services")}
             class:list={[isActive("services") && "active"]}
-            >{tt("nav.servicesOverview")}</a>
+            >{tt("nav.servicesOverview")}</a
+          >
         </li>
         <li><a href={path("services/fieldwork")}>{tt("nav.fw")}</a></li>
         <li><a href={path("services/statistics")}>{tt("nav.stats")}</a></li>
@@ -93,11 +97,13 @@ const isActive = (p: string) => here === path(p);
     </li>
     <li>
       <a href={path("news")} class:list={[here.includes("/news") && "active"]}
-        >{tt("nav.news")}</a>
+        >{tt("nav.news")}</a
+      >
     </li>
     <li>
       <a href={path("contact")} class:list={[isActive("contact") && "active"]}
-        >{tt("nav.contact")}</a>
+        >{tt("nav.contact")}</a
+      >
     </li>
   </ul>
   <div class="lang-switch">
@@ -177,6 +183,9 @@ const isActive = (p: string) => here === path(p);
   .links > li {
     position: relative;
   }
+  .has-drop {
+    padding-bottom: 6px; /* enlarge hover target to avoid losing pointer when moving into dropdown */
+  }
   .links a {
     font-family: var(--sans);
     font-weight: 500;
@@ -204,10 +213,10 @@ const isActive = (p: string) => here === path(p);
   .drop {
     display: none;
     position: absolute;
-    top: 100%;
+    top: calc(100% - 6px); /* overlap parent by 6px so there's no hover gap */
     left: 50%;
     transform: translateX(-50%);
-    margin-top: 12px;
+    margin-top: 0; /* reduced gap handled by top overlap */
     min-width: 230px;
     background: var(--navy);
     border: 1px solid rgba(255, 255, 255, 0.1);
