@@ -2,7 +2,7 @@
 title: "Un workflow R reproductible pour l'analyse de photo-quadrats benthiques"
 date: 2025-02-22
 summary: "Partage de la chaîne open source que j'utilise pour passer des photo-quadrats bruts aux estimations de recouvrement publiables — Quarto, CoralNet et tidyverse de bout en bout."
-image: "images/coral-closeup.jpg"
+image: "../images/coral-closeup.jpg"
 imageAlt: "Gros plan sur une colonie corallienne, texture détaillée"
 lang: "fr"
 translationKey: "reproducible-photo-quadrat-2025"

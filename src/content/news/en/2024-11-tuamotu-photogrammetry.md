@@ -2,7 +2,7 @@
 title: "Drone photogrammetry over a Tuamotu motu"
 date: 2024-11-08
 summary: "Notes from a three-day mapping mission on a remote Tuamotu motu — what worked, what didn't, and the orthomosaic at the end of it all."
-image: "images/atoll-aerial-1.jpg"
+image: "../images/atoll-aerial-1.jpg"
 imageAlt: "Aerial view of a Tuamotu atoll with turquoise lagoon"
 lang: "en"
 translationKey: "tuamotu-photogrammetry-2024"
