@@ -17,5 +17,7 @@ export default defineConfig({
       prefixDefaultLocale: false, // English at /, French at /fr/
     },
   },
-  integrations: [sitemap({ i18n: { defaultLocale: 'en', locales: { en: 'en', fr: 'fr' } } })],
+  // Disable sitemap integration for now to avoid build failure on Netlify
+  // Re-enable after updating or fixing @astrojs/sitemap if needed
+  integrations: [],
 });
