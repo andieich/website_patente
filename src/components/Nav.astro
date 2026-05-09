@@ -184,7 +184,14 @@ const isActive = (p: string) => here === path(p);
     position: relative;
   }
   .has-drop {
-    padding-bottom: 6px; /* enlarge hover target to avoid losing pointer when moving into dropdown */
+  }
+  .has-drop::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: -6px;
+    height: 6px;
   }
   .links a {
     font-family: var(--sans);

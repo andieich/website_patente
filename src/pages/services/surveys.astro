@@ -1,13 +1,26 @@
 ---
-import ServiceDetail from '~/components/ServiceDetail.astro';
+import ServiceDetail from "~/components/ServiceDetail.astro";
 
 const methods = [
-  { name: 'Drone photogrammetry — aerial', desc: 'Georeferenced orthomosaic and DSM production. GCP integration for sub-decimetre accuracy.' },
-  { name: 'Underwater structure-from-motion (SfM)', desc: 'Centimetre-resolution 3D models of coral colonies and reef patches.' },
-  { name: 'Coral colony 3D monitoring', desc: 'Repeated photogrammetric surveys for growth rate and tissue change tracking.' },
-  { name: 'Benthic habitat mapping', desc: 'Georeferenced habitat maps integrating dive survey data with remote sensing.' },
+  {
+    name: "Drone photogrammetry — aerial",
+    desc: "Georeferenced orthomosaic and DSM production. GCP integration for sub-decimetre accuracy.",
+  },
+  {
+    name: "Underwater structure-from-motion (SfM)",
+    desc: "Centimetre-resolution 3D models of coral colonies and reef patches.",
+  },
+  {
+    name: "Coral colony 3D monitoring",
+    desc: "Repeated photogrammetric surveys for growth rate and tissue change tracking.",
+  },
+  {
+    name: "Benthic habitat mapping",
+    desc: "Georeferenced habitat maps integrating dive survey data with remote sensing.",
+  },
 ];
 ---
+
 <ServiceDetail
   lang="en"
   slug="surveys"
@@ -15,4 +28,22 @@ const methods = [
   intro="Drone photogrammetry, underwater 3D modelling, and benthic habitat mapping for monitoring, documentation and impact assessment."
   methodsLabel="Methods & capabilities"
   methods={methods}
-/>
+>
+  <div slot="after-first-method">
+    <div style="margin-top: 2rem;">
+      <h3>Orthomosaic demo</h3>
+      <p style="color: var(--muted); margin-bottom: 1rem;">
+        Interactive map showing drone survey orthomosaic. Use the controls to navigate and measure distances.
+      </p>
+      <iframe
+        width="100%"
+        height="488"
+        frameborder="0"
+        title="Felt Map"
+        src="https://felt.com/embed/map/Opunohu-QpA1LaktSc27BJwe8smxDA?loc=-17.521856%2C-149.847797%2C17.76z&legend=1&cooperativeGestures=1&link=1&geolocation=0&zoomControls=1&scaleBar=1"
+        referrerpolicy="strict-origin-when-cross-origin"
+        style="border-radius: 6px; box-shadow: 0 8px 24px rgba(2, 6, 23, 0.45);"
+      ></iframe>
+    </div>
+  </div>
+</ServiceDetail>

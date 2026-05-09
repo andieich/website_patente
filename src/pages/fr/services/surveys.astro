@@ -5,14 +5,33 @@ const methods = [
   { name: 'Photogrammétrie par drone — aérienne', desc: "Orthomosaïques et MNS géoréférencés. Intégration de GCP pour une précision décimétrique." },
   { name: 'Structure-from-motion sous-marine', desc: 'Modèles 3D de coraux et de zones récifales à résolution centimétrique.' },
   { name: 'Suivi 3D de colonies coralliennes', desc: 'Relevés photogrammétriques répétés pour quantifier la croissance et les changements tissulaires.' },
-  { name: "Cartographie d’habitats benthiques", desc: "Cartes d’habitats géoréférencées combinant données de plongée et télédétection." },
+  { name: "Cartographie d'habitats benthiques", desc: "Cartes d'habitats géoréférencées combinant données de plongée et télédétection." },
 ];
 ---
+
 <ServiceDetail
   lang="fr"
   slug="surveys"
   title="Relevés & cartographie"
-  intro="Photogrammétrie par drone, modélisation 3D sous-marine et cartographie d’habitats benthiques pour le suivi, la documentation et les études d’impact."
+  intro="Photogrammétrie par drone, modélisation 3D sous-marine et cartographie d'habitats benthiques pour le suivi, la documentation et les études d'impact."
   methodsLabel="Méthodes & moyens"
   methods={methods}
-/>
+>
+  <div slot="after-first-method">
+    <div style="margin-top: 2rem;">
+      <h3>Démonstration orthomosaïque</h3>
+      <p style="color: var(--muted); margin-bottom: 1rem;">
+        Carte interactive montrant une orthomosaïque de relevé par drone.
+      </p>
+      <iframe
+        width="100%"
+        height="488"
+        frameborder="0"
+        title="Felt Map"
+        src="https://felt.com/embed/map/Opunohu-QpA1LaktSc27BJwe8smxDA?loc=-17.521856%2C-149.847797%2C17.76z&legend=1&cooperativeGestures=1&link=1&geolocation=0&zoomControls=1&scaleBar=1"
+        referrerpolicy="strict-origin-when-cross-origin"
+        style="border-radius: 6px; box-shadow: 0 8px 24px rgba(2, 6, 23, 0.45);"
+      ></iframe>
+    </div>
+  </div>
+</ServiceDetail>
